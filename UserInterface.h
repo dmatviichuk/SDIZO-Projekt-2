@@ -13,7 +13,7 @@ class UserInterface {
 public:
     Graph *graph;
     bool onStart = true;
-    int input, w, g, b;
+    int input, w, g, b, c;
     void ChoiceOfGraphGenerationMethod();
     void RandomGraph();
     void inputFunction();

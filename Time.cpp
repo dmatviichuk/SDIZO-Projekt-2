@@ -1,7 +1,7 @@
 #include <chrono>
 #include "Time.h"
 using namespace std;
-using namespace std::chrono;
+using namespace chrono;
 
 void Time::TimeStart() {
     StartTime = high_resolution_clock::now();

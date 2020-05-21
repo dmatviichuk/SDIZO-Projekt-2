@@ -16,25 +16,26 @@
 class Graph {
 public:
     Graph(int w, int m);
-
     ~Graph();
 
-    Edge *K, *KO;
     int **IncidenceMatrix, **nonDirectedGraphM;
-    ElementsList **NeighborhoodList, **nonDirectedGraphL;
     int vertices, edge, density, edgeReverse;
-    ElementsList *e1, *e2;
     bool *visited;
 
-public:
+    Edge *K, *KO;
+    ElementsList **NeighborhoodList, **nonDirectedGraphL;
+    ElementsList *e1, *e2;
 
-    void array_Prim();
+public:
     void show();
-    void list_Prim();
     void array_Dijkstra(int w);
     void list_Dijkstra(int w);
+    void array_Ford(int w, int end);
+    void list_Ford(int start, int end);
     void list_DFS(int w);
     void array_DFS(int w);
+    void array_Prim();
+    void list_Prim();
     bool checkCohesion();
     void randomGraph();
     void randomEdge();

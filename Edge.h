@@ -3,7 +3,7 @@
 
 class Edge {
 public:
-    int wp, wk, weight;
+    int wk, wp, weight;
 
     bool operator()(const Edge &k1, const Edge &k2) {
         if (k1.weight > k2.weight) return true;

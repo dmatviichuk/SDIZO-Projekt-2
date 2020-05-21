@@ -572,6 +572,151 @@ void Graph::list_Dijkstra(int w) {
     }
     cout << endl << endl;
 }
+void Graph::array_Ford(int w, int end)
+{
+    Time time;
+    bool change = true;
+    int* roadWeight = new int[vertices];
+    int minindex, min, tmp;
+    for (int i = 0; i < vertices; i++)
+    {
+        roadWeight[i] = INT_MAX;
+    }
+    roadWeight[w] = 0;
+
+    time.TimeStart();
+    while (change)
+    {
+        change = false;
+        for (int i = 0; i < edge; i++)
+        {
+            for (int j = 0; j < vertices; j++)
+            {
+                if (IncidenceMatrix[j][i] == 1)
+                {
+                    if (roadWeight[K[i].wp] < INT_MAX && roadWeight[K[i].wk] > roadWeight[K[i].wp] + K[i].weight)
+                    {
+                        roadWeight[K[i].wk] = roadWeight[K[i].wp] + K[i].weight;
+                        change = true;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    int* drogaWierzcholki = new int[vertices];
+    int end1 = end;
+    drogaWierzcholki[0] = end;
+    int indexPrev = 1;
+    int roadWieght = roadWeight[end];
+    cout << "Smallest way from  " << w << " to " << end << ":" << endl;
+    if (roadWeight[end] == INT_MAX)
+    {
+        cout << "NO way" << endl;
+    }
+    else
+    {
+        while (end1 != w)
+        {
+            for (int i = 0; i < edge; i++)
+            {
+                if (IncidenceMatrix[end1][i] == -1)
+                {
+                    int tmp = roadWieght - K[i].weight;
+                    if (tmp == roadWeight[K[i].wp])
+                    {
+                        roadWieght = tmp;
+                        end1 = K[i].wp;
+                        drogaWierzcholki[indexPrev] = K[i].wp;
+                        indexPrev++;
+                    }
+                }
+            }
+        }
+        for (int i = indexPrev - 1; i >= 0; i--)
+        {
+            cout << drogaWierzcholki[i] << " ";
+        }
+        cout << setw(5) << "(" << roadWeight[end] << ")";
+    }
+    time.TimeEnd();
+    cout << endl << "Time: " << time.TimeExecution() << endl;
+    cout << endl << endl;
+}
+
+
+
+void Graph::list_Ford(int start, int end)
+{
+    Time time;
+    bool zmiana = true;
+    int* roadWeight = new int[vertices];
+    int minindex, min, tmp;
+    for (int i = 0; i < vertices; i++)
+    {
+        roadWeight[i] = INT_MAX;
+    }
+    roadWeight[start] = 0;
+
+    time.TimeStart();
+    ElementsList* el;
+    while (zmiana)
+    {
+        zmiana = false;
+        for (int i = 0; i < vertices; i++)
+        {
+            el = NeighborhoodList[i];
+            while(el)
+            {
+                if (roadWeight[i] < INT_MAX && roadWeight[el->w] > roadWeight[i] + el->weight)
+                {
+                    roadWeight[el->w] = roadWeight[i] + el->weight;
+                    zmiana = true;
+                }
+                el = el->next;
+            }
+        }
+    }
+    int* drogaWierzcholki = new int[vertices];
+    int end1 = end;
+    drogaWierzcholki[0] = end;
+    int indexPrev = 1;
+    int wagaDrogi = roadWeight[end];
+    cout << "Smallest way from  " << start << " to " << end << ":" << endl;
+    if (roadWeight[end] == INT_MAX)
+    {
+        cout << "NO way" << endl;
+    }
+    else
+    {
+        while (end1 != start)
+        {
+            for (int i = 0; i < edge; i++)
+            {
+                if (IncidenceMatrix[end1][i] == -1)
+                {
+                    int tmp = wagaDrogi - K[i].weight;
+                    if (tmp == roadWeight[K[i].wp])
+                    {
+                        wagaDrogi = tmp;
+                        end1 = K[i].wp;
+                        drogaWierzcholki[indexPrev] = K[i].wp;
+                        indexPrev++;
+                    }
+                }
+            }
+        }
+        for (int i = indexPrev - 1; i >= 0; i--)
+        {
+            cout << drogaWierzcholki[i] << " ";
+        }
+        cout << setw(5) << "(" << roadWeight[end] << ")";
+    }
+    time.TimeEnd();
+    cout << endl << endl << "Time: " << time.TimeExecution() << endl;
+    cout << endl << endl;
+}
+
 
 void Graph::array_Prim() {
     int w, i, j, g;

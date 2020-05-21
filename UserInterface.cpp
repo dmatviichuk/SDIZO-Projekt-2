@@ -6,8 +6,8 @@ void UserInterface::ChoiceOfGraphGenerationMethod() {
 
     while (onStart) {
         cout << "Generowanie grafu:" << endl;
-        cout << "1. Wygeneruj losowy graph programowo" << endl;
-        cout  << "2. Wygeneruj graph z pliku" << endl;
+        cout << "1. Wygeneruj losowy graph" << endl;
+        cout << "2. Wygeneruj graph z pliku" << endl;
         cin >> input;
         switch (input) {
             case 1: {
@@ -29,10 +29,10 @@ void UserInterface::inputFunction() {
 
         cout << endl << "Analiza grafu za pomacą algorytmów:" << endl
              << "1. Wyświetl macierz incydencji i reprezentację listową" << endl
-             << "2. Algorytm DFS " << endl
+             << "2. Algorytm Bellmana-Forda" << endl
              << "3. Algorytm Dijkstry" << endl
              << "4. Algorytm Prima" << endl
-             << "5. Powrót do menu" << endl;
+             << "5. Powrót do menu generowania grafu" << endl;
         cin >> input;
         switch (input) {
             case 1: {
@@ -47,17 +47,22 @@ void UserInterface::inputFunction() {
                     if (b < graph->vertices) break;
                     else cout << "Graf nie zawiera wierzchołka o tym numerze." << endl;
                 }
-
+                while (true) {
+                    cout << "Zdefiniuj wierzchołek końcowy: ";
+                    cin >> c;
+                    if (c < graph->vertices) break;
+                    else cout << "Graf nie zawiera wierzchołka o tym numerze." << endl;
+                }
                 while (true) {
                     int checkRepresentation;
                     cout << "Jakiej reprezentacji użyć w algorytmie?" << endl << "1. Macierz Incydecji" << endl
                          << "2. Lista poprzedników i następników" << endl;
                     cin >> checkRepresentation;
                     if (checkRepresentation == 1) {
-                        graph->array_DFS(b);
+                        graph->array_Ford(b, c);
                         break;
                     } else if (checkRepresentation == 2) {
-                        graph->list_DFS(b);
+                        graph->list_Ford(b, c);
                         break;
                     }
                 }
